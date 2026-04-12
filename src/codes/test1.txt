@@ -1,0 +1,9 @@
+! Inicio do programa de teste
+let
+  vinea := 10 + 25;
+  resultado ~ (vinea * 2);
+if (resultado > 50)
+  var status := 1;
+else
+  status := 0;
+! Fim do teste

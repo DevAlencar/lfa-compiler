@@ -10,8 +10,8 @@ public class Scanner {
     private byte currentKind;
     private StringBuilder currentSpelling;
 
-    private int currentLine = 1;
-    private int currentCharPosition = 0;
+    int currentLine = 1;
+    int currentCharPosition = 0;
     private static final char EOT = '\u0000';
 
     public Scanner(String filePath) {

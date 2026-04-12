@@ -1,15 +1,32 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import enums.Kind;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Scanner scanner = new Scanner("/home/arthur/Documents/lfa-compiler/src/codes/test1.txt");
+        System.out.println("Iniciando Análise Léxica...\n");
+        Token token;
+        try {
+            do {
+                token = scanner.scan();
+                System.out.printf("Char: %d | Linha: %d | Kind: %-12s (%2d) | Spelling: \"%s\"%n",
+                        scanner.currentCharPosition,
+                        scanner.currentLine,
+                        getKindName(token.kind),
+                        token.kind,
+                        token.spelling);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+            } while (token.kind != (byte) Kind.EOT.getValue());
+            System.out.println("\nAnálise finalizada com sucesso!");
+        } catch (Exception e) {
+            System.err.println("\nErro durante a execução: " + e.getMessage());
         }
+    }
+
+    // Método auxiliar apenas para deixar o print bonito no console
+    private static String getKindName(byte kindValue) {
+        for (Kind k : Kind.values()) {
+            if (k.getValue() == kindValue) return k.name();
+        }
+        return "UNKNOWN";
     }
 }
