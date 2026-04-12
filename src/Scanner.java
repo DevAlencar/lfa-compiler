@@ -68,4 +68,49 @@ public class Scanner {
     private boolean isGraphic(char c) {
         return !(this.isDigit(c) || this.isLetter(c));
     }
+
+    private byte scanToken() {
+        if (isLetter(currentChar)) {
+            while (isLetter(currentChar) || isDigit(currentChar))
+                takeIt();
+            return (byte) Kind.IDENTIFIER.getValue();
+        }
+
+        if (isDigit(currentChar)) {
+            takeIt();
+            while (isDigit(currentChar))
+                takeIt();
+            return (byte) Kind.INTLITERAL.getValue();
+        }
+
+        switch (currentChar) {
+            case '+': case '-': case '*': case '/': case '<': case '>': case '=':
+                takeIt();
+                return (byte) Kind.OPERATOR.getValue();
+            case ';':
+                takeIt();
+                return (byte) Kind.SEMICOLON.getValue();
+            case ':':
+                takeIt();
+                if (currentChar == '=') {
+                    takeIt();
+                    return (byte) Kind.BECOMES.getValue();
+                } else {
+                    return (byte) Kind.COLON.getValue();
+                }
+            case '~':
+                takeIt();
+                return (byte) Kind.IS.getValue();
+            case '(':
+                takeIt();
+                return (byte) Kind.LPAREN.getValue();
+            case ')':
+                takeIt();
+                return (byte) Kind.RPAREN.getValue();
+            case EOT:
+                return (byte) Kind.EOT.getValue();
+            default:
+                throw new RuntimeException("Erro léxico: caractere inesperado '" + currentChar + "'");
+        }
+    }
 }
