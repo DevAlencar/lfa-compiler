@@ -6,4 +6,3 @@ if (resultado > 50)
   var status := 1;
 else
   status := 0;
-! Fim do teste

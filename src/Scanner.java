@@ -39,8 +39,8 @@ public class Scanner {
                 this.takeIt();
                 while (this.isGraphic(currentChar)){
                     takeIt();
-                    take('\n');
                 };
+                take('\n');
                 break;
             }
             case ' ': case '\n':
@@ -56,7 +56,6 @@ public class Scanner {
                 currentLine++;
                 currentCharPosition = 0;
             }
-
             int data = reader.read();
             if (data == -1) {
                 currentChar = EOT;
@@ -94,7 +93,7 @@ public class Scanner {
     }
 
     private boolean isGraphic(char c) {
-        return !(this.isDigit(c) || this.isLetter(c));
+        return !(c == '\n');
     }
 
     private byte scanToken() {
