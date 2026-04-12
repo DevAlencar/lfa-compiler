@@ -1,0 +1,35 @@
+package enums;
+
+public enum Kind {
+	IDENTIFIER(0),
+	INTLITERAL(1),
+	OPERATOR(2),
+	BEGIN(3),
+	CONST(4),
+	DO(5),
+	ELSE(6),
+	END(7),
+	IF(8),
+	IN(9),
+	LET(10),
+	THEN(11),
+	VAR(12),
+	WHILE(13),
+	SEMICOLON(14),
+	COLON(15),
+	BECOMES(16),
+	IS(17),
+	LPAREN(18),
+	RPAREN(19),
+	EOT(20);
+
+	private final int value;
+
+	Kind(int value) {
+		this.value = value;
+	}
+
+	public int getValue() {
+		return this.value;
+	}
+}
