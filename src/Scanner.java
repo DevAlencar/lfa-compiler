@@ -1,3 +1,5 @@
+import enums.Kind;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,6 +23,32 @@ public class Scanner {
             System.err.println("Erro ao abrir o arquivo: " + e.getMessage());
         }
     }
+
+    public Token scan() {
+        while (currentChar == '!' || currentChar == ' ' || currentChar == '\n'){
+            this.scanSeparator();
+        }
+        currentSpelling = new StringBuilder("");
+        currentKind = this.scanToken();
+        return new Token(currentKind, currentSpelling.toString());
+    }
+
+    private void scanSeparator() {
+        switch (currentChar){
+            case '!': {
+                this.takeIt();
+                while (this.isGraphic(currentChar)){
+                    takeIt();
+                    take('\n');
+                };
+                break;
+            }
+            case ' ': case '\n':
+                takeIt();
+                break;
+        }
+    }
+
 
     private void advance() {
         try {
