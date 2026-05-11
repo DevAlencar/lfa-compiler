@@ -1,8 +1,8 @@
-import enums.Kind;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import enums.Kind;
 
 public class Scanner {
     private BufferedReader reader;
@@ -11,7 +11,7 @@ public class Scanner {
     private StringBuilder currentSpelling;
 
     int currentLine = 1;
-    int currentCharPosition = -1;
+    int currentCharPosition = 0;
     private static final char EOT = '\u0000';
 
     public Scanner(String filePath) {
@@ -28,9 +28,13 @@ public class Scanner {
         while (currentChar == '!' || currentChar == ' ' || currentChar == '\n'){
             this.scanSeparator();
         }
+        
+        int startColumn = this.currentCharPosition;
+		int startLine = this.currentLine;
+        
         currentSpelling = new StringBuilder("");
         currentKind = this.scanToken();
-        return new Token(currentKind, currentSpelling.toString(), this.currentLine, this.currentCharPosition);
+        return new Token(currentKind, currentSpelling.toString(), startLine, startColumn);
     }
 
     private void scanSeparator() {
@@ -54,7 +58,7 @@ public class Scanner {
         try {
             if (currentChar == '\n') {
                 currentLine++;
-                currentCharPosition = -1;
+                currentCharPosition = 0;
             }
             int data = reader.read();
             if (data == -1) {
