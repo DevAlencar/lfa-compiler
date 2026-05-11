@@ -1,0 +1,12 @@
+let
+    var counter : Integer;
+    const limit ~ 10
+in
+    begin
+        counter := 0;
+        while counter < limit do
+            if counter = 5
+                counter := counter * 2
+            else
+                counter := counter + 1
+    end

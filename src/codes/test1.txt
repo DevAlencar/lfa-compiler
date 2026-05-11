@@ -1,6 +1,6 @@
 let
     var x : Integer;
-    const y = 10
+    const y ~ 10
 in
     begin
         x := (y + 5) * 2;
