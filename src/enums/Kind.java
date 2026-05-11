@@ -32,4 +32,17 @@ public enum Kind {
 	public int getValue() {
 		return this.value;
 	}
+
+	public byte getByteValue() {
+		return (byte) this.getValue();
+	}
+
+	public static Kind fromByte(byte value) {
+		for (Kind k : Kind.values()) {
+			if (k.getByteValue() == value) {
+				return k;
+			}
+		}
+		return null;
+	}
 }

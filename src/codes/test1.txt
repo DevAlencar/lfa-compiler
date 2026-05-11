@@ -1,8 +1,9 @@
-! Inicio do programa de teste
 let
-  vinea := 10 + 25;
-  resultado ~ (vinea * 2);
-if (resultado > 50)
-  var status := 1;
-else
-  status := 0;
+    var x : Integer;
+    const y = 10
+in
+    begin
+        x := (y + 5) * 2;
+        while x do
+            if y then x := x - 1 else x := 0
+    end

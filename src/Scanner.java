@@ -11,7 +11,7 @@ public class Scanner {
     private StringBuilder currentSpelling;
 
     int currentLine = 1;
-    int currentCharPosition = 0;
+    int currentCharPosition = -1;
     private static final char EOT = '\u0000';
 
     public Scanner(String filePath) {
@@ -30,7 +30,7 @@ public class Scanner {
         }
         currentSpelling = new StringBuilder("");
         currentKind = this.scanToken();
-        return new Token(currentKind, currentSpelling.toString());
+        return new Token(currentKind, currentSpelling.toString(), this.currentLine, this.currentCharPosition);
     }
 
     private void scanSeparator() {
@@ -54,7 +54,7 @@ public class Scanner {
         try {
             if (currentChar == '\n') {
                 currentLine++;
-                currentCharPosition = 0;
+                currentCharPosition = -1;
             }
             int data = reader.read();
             if (data == -1) {

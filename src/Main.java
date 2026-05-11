@@ -1,32 +1,38 @@
 import enums.Kind;
+// Importe aqui seu Scanner, Parser e Token conforme a estrutura de pacotes
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner("/home/arthur/Documents/lfa-compiler/src/codes/test1.txt");
-        System.out.println("Iniciando Análise Léxica...\n");
-        Token token;
+        // 1. Caminho do arquivo de teste
+        String path = "/home/arthur/Documents/lfa-compiler/src/codes/test1.txt";
+
+        System.out.println("Iniciando Compilação...");
+        System.out.println("Arquivo: " + path);
+        System.out.println("---------------------------------------\n");
+
         try {
-            do {
-                token = scanner.scan();
-                System.out.printf("Char: %d | Linha: %d | Kind: %-12s (%2d) | Spelling: \"%s\"%n",
-                        scanner.currentCharPosition,
-                        scanner.currentLine,
-                        getKindName(token.kind),
-                        token.kind,
-                        token.spelling);
+            // 2. Inicializa o Scanner (Léxico)
+            Scanner scanner = new Scanner(path);
 
-            } while (token.kind != (byte) Kind.EOT.getValue());
-            System.out.println("\nAnálise finalizada com sucesso!");
+            // 3. Inicializa o Parser (Sintático) passando o scanner
+            // O construtor do Parser já chamará scanner.scan() para pegar o primeiro token
+            Parser parser = new Parser(scanner);
+
+            // 4. Chama o axioma (regra inicial) da gramática
+            parser.parseProgram();
+
+            System.out.println("\n---------------------------------------");
+            System.out.println("RESULTADO: Sucesso! O código é sintaticamente correto.");
+
+        } catch (RuntimeException e) {
+            // Captura erros lançados pelo accept() ou parseSingleCommand()
+            System.err.println("\n---------------------------------------");
+            System.err.println("RESULTADO: Erro Sintático detectado!");
+            System.err.println("Detalhes: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("\nErro durante a execução: " + e.getMessage());
+            // Captura outros erros (ex: arquivo não encontrado)
+            System.err.println("\nErro inesperado: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
-
-    // Método auxiliar apenas para deixar o print bonito no console
-    private static String getKindName(byte kindValue) {
-        for (Kind k : Kind.values()) {
-            if (k.getValue() == kindValue) return k.name();
-        }
-        return "UNKNOWN";
     }
 }
