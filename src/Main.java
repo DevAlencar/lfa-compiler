@@ -1,6 +1,7 @@
 import ast.GUIVisitor;
 import ast.PrintVisitor;
 import ast.Program;
+import ast.TypeChecker; // Garanta que importou o novo TypeChecker
 
 public class Main {
     public static void main(String[] args) {
@@ -22,21 +23,28 @@ public class Main {
             Program ast = parser.parseProgram();
 
             System.out.println("\n---------------------------------------");
-            System.out.println("RESULTADO: Sucesso! O código é sintaticamente correto.");
-            
-            // 5. Visualização da AST no terminal (Visitor existente)
+            System.out.println("SINTÁTICO: Sucesso! O código é sintaticamente correto.");
+
+            // 5. Executa o Analisador Semântico (TypeChecker)
+            // Se houver variáveis não declaradas ou tipos errados, a execução para aqui
+            TypeChecker checker = new TypeChecker();
+            checker.check(ast);
+            System.out.println("SEMÂNTICO: Sucesso! Verificação de tipos concluída.");
+            System.out.println("---------------------------------------");
+
+            // 6. Visualização da AST no terminal
             PrintVisitor printer = new PrintVisitor();
             printer.print(ast);
 
-            // 6. Visualização da AST em Janela Gráfica (Novo Visitor)
+            // 7. Visualização da AST em Janela Gráfica
             System.out.println("\n---> Abrindo janela de visualização da AST...");
             GUIVisitor gui = new GUIVisitor();
             gui.show(ast);
 
         } catch (RuntimeException e) {
-            // Captura erros lançados pelo accept() ou parseSingleCommand()
+            // Captura erros lançados pelo Parser (Sintáticos) ou pelo TypeChecker (Semânticos)
             System.err.println("\n---------------------------------------");
-            System.err.println("RESULTADO: Erro Sintático detectado!");
+            System.err.println("RESULTADO: Erro detectado durante a compilação!");
             System.err.println("Detalhes: " + e.getMessage());
         } catch (Exception e) {
             // Captura outros erros (ex: arquivo não encontrado)

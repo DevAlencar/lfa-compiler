@@ -1,9 +1,29 @@
 let
+    ! Declaracao de variaveis (separadas por ponto e virgula)
     var x : Integer;
-    const y ~ 10
+    var y : Integer;
+    var flag : Boolean
 in
     begin
-        x := (y + 5) * 2;
-        while x do
-            if y then x := x - 1 else x := 0
+
+        ! Inicializacao
+        x := 10;
+        y := 5;
+
+        ! Operacoes aritmeticas
+        x := x + y * 2;   !<-- Esse ponto e virgula separa a atribuicao do IF
+
+        ! Condicional
+        if x > y then
+            flag := true
+        else
+            flag := false; !<-- ESTE PONTO E VIRGULA EH CRITICO! Separa o IF do WHILE
+
+        ! Loop while
+        while x > 0 do
+        begin
+            ! decremento
+            x := x - 1
+        end
+
     end
