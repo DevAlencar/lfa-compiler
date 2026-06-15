@@ -62,6 +62,20 @@ public class Parser {
         }
     }
 
+    private Terminal.BooleanLiteral parseBooleanLiteral() {
+        if (currentToken.kind == Kind.BOOLLITERAL.getByteValue()) {
+            Terminal.BooleanLiteral bl = new Terminal.BooleanLiteral(currentToken.spelling);
+            acceptIt();
+            return bl;
+        } else {
+            throw new RuntimeException(
+                "Erro: Literal booleano esperado."
+                + " Linha: " + currentToken.currentLine
+                + " Coluna: " + currentToken.currentColumn
+            );
+        }
+    }
+
     private Terminal.Operator parseOperator() {
         if (currentToken.kind == Kind.OPERATOR.getByteValue()) {
             Terminal.Operator o = new Terminal.Operator(currentToken.spelling);
@@ -195,6 +209,9 @@ public class Parser {
             Expression e = parseExpression();
             accept(Kind.RPAREN.getByteValue());
             return e;
+        }else if (currentToken.kind == Kind.BOOLLITERAL.getByteValue()) {
+            Terminal.BooleanLiteral bl = parseBooleanLiteral();
+            return new Expression.BoolLiteralExpression(bl);
         }
         throw new RuntimeException(
             "Erro: Expressão primária inválida."

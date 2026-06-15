@@ -21,7 +21,8 @@ public enum Kind {
 	IS(17),
 	LPAREN(18),
 	RPAREN(19),
-	EOT(20);
+	BOOLLITERAL(20),
+	EOT(21);
 
 	private final int value;
 

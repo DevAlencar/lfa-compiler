@@ -111,6 +111,12 @@ public class TypeChecker implements Visitor {
     }
 
     @Override
+    public void visitBoolLiteralExpression(Expression.BoolLiteralExpression ast) {
+        ast.BL.visit(this);
+        currentType = BOOL_TYPE; // true ou false são implicitamente Boolean
+    }
+
+    @Override
     public void visitUnaryExpression(Expression.UnaryExpression ast) {
         ast.O.visit(this);
         String op = currentStringValue;
@@ -220,6 +226,11 @@ public class TypeChecker implements Visitor {
 
     @Override
     public void visitIntegerLiteral(Terminal.IntegerLiteral ast) {
+        currentStringValue = ast.spelling;
+    }
+
+    @Override
+    public void visitBooleanLiteral(Terminal.BooleanLiteral ast) {
         currentStringValue = ast.spelling;
     }
 

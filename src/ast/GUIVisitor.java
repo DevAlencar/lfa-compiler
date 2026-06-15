@@ -126,6 +126,13 @@ public class GUIVisitor implements Visitor {
     }
 
     @Override
+    public void visitBoolLiteralExpression(Expression.BoolLiteralExpression ast) {
+        addNode("BoolLiteralExpression", () -> {
+            if (ast.BL != null) ast.BL.visit(this);
+        });
+    }
+
+    @Override
     public void visitUnaryExpression(Expression.UnaryExpression ast) {
         addNode("UnaryExpression", () -> {
             if (ast.O != null) ast.O.visit(this);
@@ -198,6 +205,11 @@ public class GUIVisitor implements Visitor {
     @Override
     public void visitIntegerLiteral(Terminal.IntegerLiteral ast) {
         addNode("IntegerLiteral(" + ast.spelling + ")", null);
+    }
+
+    @Override
+    public void visitBooleanLiteral(Terminal.BooleanLiteral ast) {
+        addNode("BooleanLiteral(" + ast.spelling + ")", null);
     }
 
     @Override

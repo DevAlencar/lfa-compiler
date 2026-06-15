@@ -109,6 +109,15 @@ public class PrintVisitor implements Visitor {
     }
 
     @Override
+    public void visitBoolLiteralExpression(Expression.BoolLiteralExpression ast) {
+        indent();
+        System.out.println("BoolLiteralExpression");
+        i++;
+        ast.BL.visit(this);
+        i--;
+    }
+
+    @Override
     public void visitUnaryExpression(Expression.UnaryExpression ast) {
         indent();
         System.out.println("UnaryExpression");
@@ -199,6 +208,12 @@ public class PrintVisitor implements Visitor {
     public void visitIntegerLiteral(Terminal.IntegerLiteral ast) {
         indent();
         System.out.println("IntegerLiteral(" + ast.spelling + ")");
+    }
+
+    @Override
+    public void visitBooleanLiteral(Terminal.BooleanLiteral ast) {
+        indent();
+        System.out.println("BooleanLiteral(" + ast.spelling + ")");
     }
 
     @Override

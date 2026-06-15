@@ -6,7 +6,7 @@ import ast.TypeChecker; // Garanta que importou o novo TypeChecker
 public class Main {
     public static void main(String[] args) {
         // 1. Caminho do arquivo de teste
-        String path = "src/codes/test4_invalid_command.txt";
+        String path = "src/codes/nivaldo.txt";
 
         System.out.println("Iniciando Compilação...");
         System.out.println("Arquivo: " + path);

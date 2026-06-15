@@ -29,6 +29,17 @@ public abstract class Terminal extends AST {
         }
     }
 
+    public static class BooleanLiteral extends Terminal {
+        public BooleanLiteral(String spelling) {
+            super(spelling);
+        }
+
+        @Override
+        public void visit(Visitor v) {
+            v.visitBooleanLiteral(this);
+        }
+    }
+
     public static class Operator extends Terminal {
         public Operator(String spelling) {
             super(spelling);

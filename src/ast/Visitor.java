@@ -16,6 +16,7 @@ public interface Visitor {
     // Expressions
     void visitVnameExpression(Expression.VnameExpression ast);
     void visitIntLiteralExpression(Expression.IntLiteralExpression ast);
+    void visitBoolLiteralExpression(Expression.BoolLiteralExpression ast);
     void visitUnaryExpression(Expression.UnaryExpression ast);
     void visitBinaryExpression(Expression.BinaryExpression ast);
     void visitEmptyExpression(Expression.EmptyExpression ast);
@@ -35,5 +36,6 @@ public interface Visitor {
     // Terminals
     void visitIdentifier(Terminal.Identifier ast);
     void visitIntegerLiteral(Terminal.IntegerLiteral ast);
+    void visitBooleanLiteral(Terminal.BooleanLiteral ast);
     void visitOperator(Terminal.Operator ast);
 }

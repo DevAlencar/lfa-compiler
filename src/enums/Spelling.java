@@ -21,6 +21,8 @@ public enum Spelling {
 	IS("~"),
 	LPAREN("("),
 	RPAREN(")"),
+	TRUE("true"),
+	FALSE("false"),
 	EOT("<eot>");
 
 	private final String value;

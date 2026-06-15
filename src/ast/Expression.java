@@ -27,6 +27,19 @@ public abstract class Expression extends AST {
         }
     }
 
+    public static class BoolLiteralExpression extends Expression {
+        public Terminal.BooleanLiteral BL;
+
+        public BoolLiteralExpression(Terminal.BooleanLiteral bl) {
+            this.BL = bl;
+        }
+
+        @Override
+        public void visit(Visitor v) {
+            v.visitBoolLiteralExpression(this);
+        }
+    }
+
     public static class UnaryExpression extends Expression {
         public Terminal.Operator O;
         public Expression E;
