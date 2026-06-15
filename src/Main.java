@@ -1,12 +1,16 @@
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
+import ast.Encoder;
 import ast.GUIVisitor;
 import ast.PrintVisitor;
 import ast.Program;
 import ast.TypeChecker;
-import ast.Encoder; // <-- Certifique-se de importar o seu novo Encoder
 
 public class Main {
     public static void main(String[] args) {
-        String path = "src/codes/test1.txt"; // Seu arquivo de teste válido
+        String path = "src/codes/nivaldo.txt";
 
         System.out.println("Iniciando Compilação...");
         System.out.println("Arquivo: " + path);
@@ -32,10 +36,12 @@ public class Main {
             Encoder generator = new Encoder();
             generator.visitProgram(ast); // Faz o visitor varrer a AST gerando o código
 
-            // AQUI É ONDE O SEU RESULTADO VAI APARECER:
+            String generatedCode = generator.getGeneratedCode();
             System.out.println("\n======= CÓDIGO OBJETO TAM GERADO =======");
-            System.out.println(generator.getGeneratedCode());
+            System.out.println(generatedCode);
             System.out.println("========================================");
+
+            saveObjectFile(path, generatedCode);
 
             // 4. Visualizadores Visuais (Opcional, rodam no final)
             PrintVisitor printer = new PrintVisitor();
@@ -51,6 +57,25 @@ public class Main {
         } catch (Exception e) {
             System.err.println("\nErro inesperado: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private static void saveObjectFile(String sourcePath, String content) {
+        try {
+            File sourceFile = new File(sourcePath);
+            String fileName = sourceFile.getName();
+            File objDir = new File("obj");
+
+            if (!objDir.exists()) {
+                objDir.mkdirs();
+            }
+
+            File outputFile = new File(objDir, fileName);
+            Files.write(outputFile.toPath(), content.getBytes());
+
+            System.out.println("\nARQUIVO OBJETO GERADO: " + outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar o arquivo objeto: " + e.getMessage());
         }
     }
 }
