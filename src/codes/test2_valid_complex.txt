@@ -1,0 +1,17 @@
+let
+    var a : Integer;
+    var b : Integer;
+    const max ~ 100
+in
+    begin
+        a := 0;
+        b := 1;
+        while a < max do
+            begin
+                a := a + 1;
+                if a = 50 then
+                    b := b * 2
+                else
+                    b := b + a
+            end
+    end

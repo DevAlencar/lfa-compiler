@@ -1,0 +1,17 @@
+let
+    const pi ~ 3;
+    var radius : Integer
+in
+    begin
+        radius := 10;
+        let
+            var area : Integer
+        in
+            begin
+                area := pi * (radius * radius);
+                if area > 100 then
+                    radius := 0
+                else
+                    radius := radius + 1
+            end
+    end

@@ -1,0 +1,9 @@
+let
+    var index Integer;
+    const step ~ 2
+in
+    begin
+        index := 0;
+        while index < 10 do
+            index := index + step
+    end
