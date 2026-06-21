@@ -7,6 +7,7 @@ A primeira etapa do compilador `lfa-compiler` consiste na implementação do Ana
 - `Scanner.java`: Implementação central do analisador léxico.
 - `Token.java`: Classe que representa um token, armazenando seu tipo (`kind`), valor literal (`spelling`), linha e coluna.
 - `enums/Kind.java`: Enumeração com todos os tipos de tokens aceitos pela linguagem.
+- `enums/Spelling.java`: Enumeração com as palavras reservadas e símbolos para mapeamento rápido de lexemas.
 
 ## Implementação
 
@@ -14,9 +15,10 @@ A primeira etapa do compilador `lfa-compiler` consiste na implementação do Ana
 O Scanner foi implementado para reconhecer os seguintes padrões:
 - **Identificadores**: Iniciam com uma letra, seguidos por letras ou dígitos.
 - **Literais Inteiros**: Sequências de um ou mais dígitos.
+- **Literais de Ponto Flutuante (Float)**: Sequências de dígitos separadas por ponto (ex: `3.14`, `.5`).
 - **Literais Booleanos**: `true` ou `false`.
-- **Operadores**: `+`, `-`, `*`, `/`, `<`, `>`, `=`.
-- **Símbolos e Palavras-Chave**: `;`, `:`, `:=`, `~`, `(`, `)`, além de palavras reservadas como `let`, `in`, `var`, `const`, `begin`, `end`, `if`, `then`, `else`, `while`, `do`.
+- **Operadores**: `+`, `-`, `*`, `/`, `<`, `>`, `=`, `and`, `or`.
+- **Símbolos e Palavras-Chave**: `;`, `:`, `:=`, `.`, `(`, `)`, além de palavras reservadas como `program`, `integer`, `boolean`, `let`, `in`, `var`, `const`, `begin`, `end`, `if`, `then`, `else`, `while`, `do`.
 
 ### 2. Estratégia de Leitura
 A leitura é feita de forma sequencial utilizando um `BufferedReader`. O método principal `scan()` orquestra o processo:
@@ -27,7 +29,7 @@ A leitura é feita de forma sequencial utilizando um `BufferedReader`. O método
 
 ### 3. Separadores e Comentários
 Os separadores são tratados pelo método `scanSeparator()`:
-- **Espaços e Newlines**: São consumidos e ignorados, servindo apenas para delimitar tokens.
+- **Espaços, Tabulações e Newlines**: Espaços em branco (` `), tabs (`\t`), retorno de carro (`\r`) e quebras de linha (`\n`) são consumidos e ignorados, servindo apenas para delimitar tokens.
 - **Comentários**: Iniciados pelo caractere `!`, estendem-se até o final da linha. O Scanner ignora todo o conteúdo gráfico após o `!` até encontrar uma quebra de linha.
 
 ### 4. Tratamento de Erros

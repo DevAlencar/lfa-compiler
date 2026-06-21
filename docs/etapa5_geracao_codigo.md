@@ -14,7 +14,7 @@ A geração de código é implementada através do padrão de projeto **Visitor*
 
 ### 2. Gerenciamento da Pilha e Endereçamento
 Como a TAM é uma máquina de pilha, a gestão de memória foca em deslocamentos relativos ao **Frame Base (LB)** local:
-- **Variáveis Locais**: Cada variável declarada recebe um endereço (offset) único dentro de seu escopo.
+- **Variáveis Locais e Globais**: Cada variável declarada no programa principal ou nos blocos locais recebe um endereço (offset) único dentro de seu escopo.
 - **AddressTable**: Mantém o rastreamento de qual identificador corresponde a qual posição na pilha.
 
 ### 3. Instruções Geradas
@@ -30,7 +30,7 @@ As principais instruções da TAM utilizadas são:
 ### 4. Estruturas de Controle
 - **Condicionais (If)**: Utiliza `JUMPIF` para desviar para o bloco `else` caso a condição seja falsa (0), e `JUMP` para pular o bloco `else` após executar o `then`.
 - **Laços (While)**: Utiliza um rótulo no início para reavaliação da condição e um `JUMPIF` para sair do laço, retornando ao início com um `JUMP` ao final do corpo.
-- **Escopos (Let)**: Ao entrar em um comando `let`, o `AddressTable` cria um novo nível. Ao sair, o `Encoder` emite uma instrução `POP` para limpar as variáveis locais da pilha, garantindo a integridade da memória.
+- **Escopos Globais e Locais**: Ao processar a raiz do nó `Program`, ou entrar em um comando `let`, o `AddressTable` gerencia um novo nível de variáveis. Ao finalizar, o `Encoder` emite uma instrução `POP` para limpar essas variáveis da pilha, garantindo a integridade da memória antes do encerramento (no caso do programa) ou da volta ao escopo anterior.
 
 ### 5. Finalização
 Todo programa gerado termina com a instrução `HALT`, indicando o fim da execução para o interpretador da TAM.

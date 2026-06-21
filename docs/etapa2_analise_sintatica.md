@@ -18,12 +18,13 @@ A gramática foi adaptada para ser **LL(1)**, eliminando ambiguidades e recursõ
 - `accept(byte expectedKind)`: Valida se o token atual é do tipo esperado. Se for, avança para o próximo; caso contrário, lança um erro sintático.
 - `acceptIt()`: Avança incondicionalmente para o próximo token fornecido pelo Scanner.
 
-### 3. Estrutura Gramatical (EBNF)
-O Parser segue as produções definidas na gramática, tais como:
-- `Program ::= single-Command`
-- `Command ::= single-Command ( ; single-Command )*`
-- `Declaration ::= single-Declaration ( ; single-Declaration )*`
-- `Expression ::= primary-Expression ( Operator primary-Expression )*`
+### 3. Estrutura Gramatical (LL(1))
+O Parser segue as produções rigorosamente definidas no arquivo `gramatica-ll1.md`, tais como:
+- `Program ::= program ID ; <Declarations> <Command> .`
+- `Command ::= <Assign> | <If> | <While> | <CompoundCommand>`
+- `CompoundCommand ::= begin <CommandList> end`
+- `CommandList ::= <Command> ; <CommandList> | epsilon`
+- Precedência de expressões fatorada à direita (`<ExpressaoSimples>`, `<RestoExpressao>`, etc).
 
 ### 4. Construção da AST
 Diferente de um parser puramente reconhecedor, este Parser instancia objetos das classes do pacote `ast` à medida que as regras são validadas. Ao final do processamento do método `parseProgram()`, uma árvore completa representando a estrutura lógica do programa é retornada para as etapas subsequentes (Análise de Contexto e Geração de Código).

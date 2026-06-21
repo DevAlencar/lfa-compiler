@@ -9,11 +9,11 @@ Esta etapa do compilador Java foca na transformação do fluxo de tokens, valida
 Seguindo as diretrizes de projeto, a AST foi implementada utilizando uma hierarquia de classes abstratas e concretas. Para manter o projeto organizado e evitar uma proliferação excessiva de arquivos `.java`, utilizamos o padrão de **Agrupamento por Arquivo Base**:
 
 - **`AST.java`**: Classe base de todos os nós, definindo o contrato obrigatório `public abstract void visit(Visitor v)`.
-- **`Program.java`**: Representa o nó raiz do programa.
+- **`Program.java`**: Representa o nó raiz do programa, agora estendendo a árvore completa (possui `Terminal.Identifier name`, `Declaration D`, `Command C`).
 - **`Command.java`**: Classe base para todos os comandos. Agrupa as subclasses estáticas: `AssignCommand`, `CallCommand`, `SequentialCommand`, `IfCommand`, `WhileCommand`, `LetCommand` e `EmptyCommand`.
-- **`Expression.java`**: Classe base para expressões. Agrupa: `VnameExpression`, `IntLiteralExpression`, `UnaryExpression`, `BinaryExpression` e `EmptyExpression`.
+- **`Expression.java`**: Classe base para expressões. Agrupa: `VnameExpression`, `IntLiteralExpression`, `BoolLiteralExpression`, `FloatLiteralExpression`, `UnaryExpression`, `BinaryExpression` e `EmptyExpression`.
 - **`Declaration.java`**: Classe base para declarações. Agrupa: `SequentialDeclaration`, `ConstDeclaration`, `VarDeclaration` e `EmptyDeclaration`.
-- **`Terminal.java`**: Representa as folhas da árvore (tokens literais), como `Identifier`, `IntegerLiteral` e `Operator`.
+- **`Terminal.java`**: Representa as folhas da árvore (tokens literais), como `Identifier`, `IntegerLiteral`, `BooleanLiteral`, `FloatLiteral` e `Operator`.
 - **`Vname.java` e `TypeDenoter.java`**: Representam nomes de variáveis e especificadores de tipos.
 
 ### 2.2. Construção da Árvore (Parser)
