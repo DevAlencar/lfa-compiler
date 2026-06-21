@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import ast.Decompiler;
 import ast.Encoder;
 import ast.GUIVisitor;
 import ast.PrintVisitor;
@@ -10,9 +11,15 @@ import ast.TypeChecker;
 
 public class Main {
     public static void main(String[] args) {
-        String path = "src/codes/nivaldo.txt";
-        if (args.length > 0) {
-            path = args[0];
+        String path = "src/codes/test_ll1.txt";
+        boolean decompileOnly = false;
+
+        for (String arg : args) {
+            if ("--decompile".equals(arg) || "-d".equals(arg)) {
+                decompileOnly = true;
+            } else if (!arg.startsWith("-")) {
+                path = arg;
+            }
         }
 
         System.out.println("Iniciando Compilação...");
@@ -33,6 +40,17 @@ public class Main {
             checker.check(ast);
             System.out.println("SEMÂNTICO: Sucesso! Verificação de tipos concluída.");
             System.out.println("---------------------------------------");
+
+            Decompiler decompiler = new Decompiler();
+            String decompiledSource = decompiler.decompile(ast);
+            System.out.println("\n======= CÓDIGO DESCOMPILADO (AST) =======");
+            System.out.println(decompiledSource);
+            System.out.println("========================================");
+            saveDecompiledFile(path, decompiledSource);
+
+            if (decompileOnly) {
+                return;
+            }
 
             // 3. Fase de Geração de Código (Onde o resultado é gerado)
             System.out.println("---> Gerando código para a TAM (Triangle Abstract Machine)...");
@@ -60,6 +78,25 @@ public class Main {
         } catch (Exception e) {
             System.err.println("\nErro inesperado: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    private static void saveDecompiledFile(String sourcePath, String content) {
+        try {
+            File sourceFile = new File(sourcePath);
+            String fileName = sourceFile.getName();
+            File decompiledDir = new File("decompiled");
+
+            if (!decompiledDir.exists()) {
+                decompiledDir.mkdirs();
+            }
+
+            File outputFile = new File(decompiledDir, fileName);
+            Files.write(outputFile.toPath(), content.getBytes());
+
+            System.out.println("ARQUIVO DESCOMPILADO: " + outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar o arquivo decompilado: " + e.getMessage());
         }
     }
 
