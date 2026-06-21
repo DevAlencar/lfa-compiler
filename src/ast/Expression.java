@@ -77,4 +77,17 @@ public abstract class Expression extends AST {
             v.visitEmptyExpression(this);
         }
     }
+
+    public static class FloatLiteralExpression extends Expression {
+        public Terminal.FloatLiteral FL;
+
+        public FloatLiteralExpression(Terminal.FloatLiteral fl) {
+            this.FL = fl;
+        }
+
+        @Override
+        public void visit(Visitor v) {
+            v.visitFloatLiteralExpression(this);
+        }
+    }
 }

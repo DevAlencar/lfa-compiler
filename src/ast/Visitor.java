@@ -20,6 +20,7 @@ public interface Visitor {
     void visitUnaryExpression(Expression.UnaryExpression ast);
     void visitBinaryExpression(Expression.BinaryExpression ast);
     void visitEmptyExpression(Expression.EmptyExpression ast);
+    void visitFloatLiteralExpression(Expression.FloatLiteralExpression ast);
 
     // Declarations
     void visitSequentialDeclaration(Declaration.SequentialDeclaration ast);
@@ -38,4 +39,5 @@ public interface Visitor {
     void visitIntegerLiteral(Terminal.IntegerLiteral ast);
     void visitBooleanLiteral(Terminal.BooleanLiteral ast);
     void visitOperator(Terminal.Operator ast);
+    void visitFloatLiteral(Terminal.FloatLiteral ast);
 }

@@ -18,7 +18,16 @@ public class Encoder implements Visitor {
 
     @Override
     public void visitProgram(Program ast) {
+        currentEnv = new AddressTable(null);
+        
+        if (ast.D != null) ast.D.visit(this);
         if (ast.C != null) ast.C.visit(this);
+        
+        int allocatedVariables = currentEnv.getLocalOffset();
+        if (allocatedVariables > 0) {
+            code.append("POP (0) ").append(allocatedVariables).append("\n");
+        }
+        
         code.append("HALT\n");
     }
 
@@ -200,4 +209,11 @@ public class Encoder implements Visitor {
     @Override public void visitEmptyCommand(Command.EmptyCommand ast) {}
     @Override public void visitEmptyExpression(Expression.EmptyExpression ast) {}
     @Override public void visitEmptyDeclaration(Declaration.EmptyDeclaration ast) {}
+    @Override public void visitFloatLiteralExpression(Expression.FloatLiteralExpression ast) {
+        ast.FL.visit(this);
+        code.append("LOADL ").append(currentSpelling).append("\n");
+    }
+    @Override public void visitFloatLiteral(Terminal.FloatLiteral ast) {
+        currentSpelling = ast.spelling;
+    }
 }

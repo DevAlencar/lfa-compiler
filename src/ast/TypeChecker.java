@@ -11,6 +11,7 @@ public class TypeChecker implements Visitor {
     // Tipos nativos da linguagem mapeados como strings
     private static final String INT_TYPE = "Integer";
     private static final String BOOL_TYPE = "Boolean";
+    private static final String FLOAT_TYPE = "Float";
     private static final String ERROR_TYPE = "Unknown";
 
     public void check(Program p) {
@@ -21,6 +22,12 @@ public class TypeChecker implements Visitor {
 
     @Override
     public void visitProgram(Program ast) {
+        if (ast.name != null) {
+            ast.name.visit(this);
+        }
+        if (ast.D != null) {
+            ast.D.visit(this);
+        }
         if (ast.C != null) {
             ast.C.visit(this);
         }
@@ -215,8 +222,13 @@ public class TypeChecker implements Visitor {
     @Override
     public void visitSimpleTypeDenoter(TypeDenoter.SimpleTypeDenoter ast) {
         ast.I.visit(this);
-        // O spelling do identificador de tipo (ex: "Integer", "Boolean") vira o tipo atual
-        currentType = currentStringValue;
+        if (currentStringValue.equals("integer")) {
+             currentType = INT_TYPE;
+        } else if (currentStringValue.equals("boolean")) {
+             currentType = BOOL_TYPE;
+        } else {
+             currentType = currentStringValue;
+        }
     }
 
     @Override
@@ -236,6 +248,17 @@ public class TypeChecker implements Visitor {
 
     @Override
     public void visitOperator(Terminal.Operator ast) {
+        currentStringValue = ast.spelling;
+    }
+
+    @Override
+    public void visitFloatLiteralExpression(Expression.FloatLiteralExpression ast) {
+        ast.FL.visit(this);
+        currentType = FLOAT_TYPE;
+    }
+
+    @Override
+    public void visitFloatLiteral(Terminal.FloatLiteral ast) {
         currentStringValue = ast.spelling;
     }
 }

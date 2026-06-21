@@ -50,4 +50,15 @@ public abstract class Terminal extends AST {
             v.visitOperator(this);
         }
     }
+
+    public static class FloatLiteral extends Terminal {
+        public FloatLiteral(String spelling) {
+            super(spelling);
+        }
+
+        @Override
+        public void visit(Visitor v) {
+            v.visitFloatLiteral(this);
+        }
+    }
 }

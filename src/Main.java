@@ -11,6 +11,9 @@ import ast.TypeChecker;
 public class Main {
     public static void main(String[] args) {
         String path = "src/codes/nivaldo.txt";
+        if (args.length > 0) {
+            path = args[0];
+        }
 
         System.out.println("Iniciando Compilação...");
         System.out.println("Arquivo: " + path);

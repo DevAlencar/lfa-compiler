@@ -1,0 +1,24 @@
+program ComplexDemo;
+var a : integer;
+var b : integer;
+var c : integer;
+var flag : boolean;
+begin
+    a := 2;
+    b := 3;
+    c := 4;
+    flag := false;
+
+    if (a * b) > c then
+    begin
+        while c > 0 do
+        begin
+            c := c - 1;
+            flag := true;
+        end;
+    end
+    else
+    begin
+        a := (a + b) * (c + 1);
+    end;
+end.

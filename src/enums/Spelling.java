@@ -3,26 +3,30 @@ package enums;
 public enum Spelling {
 	IDENTIFIER("<identifier>"),
 	INTEGER_LITERAL("<integer-literal>"),
+	FLOAT_LITERAL("<float-literal>"),
+	BOOLEAN_LITERAL("<boolean-literal>"),
 	OPERATOR("<operator>"),
+
+	AND("and"),
 	BEGIN("begin"),
-	CONST("const"),
+	BOOLEAN("boolean"),
 	DO("do"),
 	ELSE("else"),
 	END("end"),
 	IF("if"),
-	IN("in"),
-	LET("let"),
+	INTEGER("integer"),
+	OR("or"),
+	PROGRAM("program"),
 	THEN("then"),
 	VAR("var"),
 	WHILE("while"),
+
 	SEMICOLON(";"),
 	COLON(":"),
 	BECOMES(":="),
-	IS("~"),
+	DOT("."),
 	LPAREN("("),
 	RPAREN(")"),
-	TRUE("true"),
-	FALSE("false"),
 	EOT("<eot>");
 
 	private final String value;

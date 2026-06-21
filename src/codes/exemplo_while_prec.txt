@@ -1,0 +1,19 @@
+program NestedWhiles;
+var i : integer;
+var j : integer;
+var sum : integer;
+begin
+    i := 0;
+    sum := 0;
+
+    while i < 5 do
+    begin
+        j := 0;
+        while j < 3 do
+        begin
+            sum := sum + (i + j) * 2;
+            j := j + 1;
+        end;
+        i := i + 1;
+    end;
+end.

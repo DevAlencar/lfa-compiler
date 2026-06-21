@@ -25,7 +25,7 @@ public class Scanner {
     }
 
     public Token scan() {
-        while (currentChar == '!' || currentChar == ' ' || currentChar == '\n'){
+        while (currentChar == '!' || currentChar == ' ' || currentChar == '\n' || currentChar == '\t' || currentChar == '\r'){
             this.scanSeparator();
         }
         
@@ -47,7 +47,7 @@ public class Scanner {
                 take('\n');
                 break;
             }
-            case ' ': case '\n':
+            case ' ': case '\n': case '\t': case '\r':
                 takeIt();
                 break;
         }
@@ -97,7 +97,7 @@ public class Scanner {
     }
 
     private boolean isGraphic(char c) {
-        return !(c == '\n');
+        return !(c == '\n' || c == '\r');
     }
 
     private byte scanToken() {
@@ -106,17 +106,6 @@ public class Scanner {
                 takeIt();
             String spelling = currentSpelling.toString();
             switch (spelling) {
-                case "begin": return (byte) Kind.BEGIN.getValue();
-                case "const": return (byte) Kind.CONST.getValue();
-                case "do":    return (byte) Kind.DO.getValue();
-                case "else":  return (byte) Kind.ELSE.getValue();
-                case "end":   return (byte) Kind.END.getValue();
-                case "if":    return (byte) Kind.IF.getValue();
-                case "in":    return (byte) Kind.IN.getValue();
-                case "let":   return (byte) Kind.LET.getValue();
-                case "then":  return (byte) Kind.THEN.getValue();
-                case "var":   return (byte) Kind.VAR.getValue();
-                case "while": return (byte) Kind.WHILE.getValue();
                 case "true":
                 case "false": return (byte) Kind.BOOLLITERAL.getValue();
                 default:      return (byte) Kind.IDENTIFIER.getValue();
@@ -127,6 +116,12 @@ public class Scanner {
             takeIt();
             while (isDigit(currentChar))
                 takeIt();
+            if (currentChar == '.') {
+                takeIt();
+                while (isDigit(currentChar))
+                    takeIt();
+                return (byte) Kind.FLOATLITERAL.getValue();
+            }
             return (byte) Kind.INTLITERAL.getValue();
         }
 
@@ -145,9 +140,15 @@ public class Scanner {
                 } else {
                     return (byte) Kind.COLON.getValue();
                 }
-            case '~':
+            case '.':
                 takeIt();
-                return (byte) Kind.IS.getValue();
+                if (isDigit(currentChar)) {
+                    while (isDigit(currentChar))
+                        takeIt();
+                    return (byte) Kind.FLOATLITERAL.getValue();
+                } else {
+                    return (byte) Kind.DOT.getValue();
+                }
             case '(':
                 takeIt();
                 return (byte) Kind.LPAREN.getValue();

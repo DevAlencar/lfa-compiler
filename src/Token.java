@@ -15,7 +15,7 @@ public class Token {
 
 		if (this.kind == Kind.IDENTIFIER.getValue()) {
 			for (
-				int k = Kind.BEGIN.getValue();
+				int k = Kind.AND.getValue();
 				k <= Kind.WHILE.getValue();
 				k++
 			) {

@@ -19,6 +19,8 @@ public class PrintVisitor implements Visitor {
         indent();
         System.out.println("Program");
         i++;
+        if (ast.name != null) ast.name.visit(this);
+        if (ast.D != null) ast.D.visit(this);
         if (ast.C != null) ast.C.visit(this);
         i--;
     }
@@ -219,6 +221,21 @@ public class PrintVisitor implements Visitor {
     @Override
     public void visitOperator(Terminal.Operator ast) {
         indent();
-        System.out.println("Operator(" + ast.spelling + ")");
+        System.out.println("Operator: " + ast.spelling);
+    }
+
+    @Override
+    public void visitFloatLiteralExpression(Expression.FloatLiteralExpression ast) {
+        indent();
+        System.out.println("FloatLiteralExpression");
+        i++;
+        ast.FL.visit(this);
+        i--;
+    }
+
+    @Override
+    public void visitFloatLiteral(Terminal.FloatLiteral ast) {
+        indent();
+        System.out.println("FloatLiteral: " + ast.spelling);
     }
 }

@@ -53,6 +53,8 @@ public class GUIVisitor implements Visitor {
     @Override
     public void visitProgram(Program ast) {
         addNode("Program", () -> {
+            if (ast.name != null) ast.name.visit(this);
+            if (ast.D != null) ast.D.visit(this);
             if (ast.C != null) ast.C.visit(this);
         });
     }
@@ -215,5 +217,17 @@ public class GUIVisitor implements Visitor {
     @Override
     public void visitOperator(Terminal.Operator ast) {
         addNode("Operator(" + ast.spelling + ")", null);
+    }
+
+    @Override
+    public void visitFloatLiteralExpression(Expression.FloatLiteralExpression ast) {
+        addNode("FloatLiteralExpression", () -> {
+            if (ast.FL != null) ast.FL.visit(this);
+        });
+    }
+
+    @Override
+    public void visitFloatLiteral(Terminal.FloatLiteral ast) {
+        addNode("FloatLiteral(" + ast.spelling + ")", null);
     }
 }
